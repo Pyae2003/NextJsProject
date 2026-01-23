@@ -1,12 +1,13 @@
 import Heading from "@/components/Heading";
 import PostItems from "@/features/posts/components/PostItems";
-import { getPosts } from "@/features/posts/queries/get-post";
+import { getPost } from "@/features/posts/queries/get-post";
+import { info } from "../../../../generated/prisma/client";
 interface Props {
   params: Promise<{ id: string }>;
 }
 const page = async ({ params }: Props) => {
   const { id } = await params;
-  const data = await getPosts(id);
+  const data = await getPost(id) as info;
   if(!data){
     return <div>Post not found</div>;
   }

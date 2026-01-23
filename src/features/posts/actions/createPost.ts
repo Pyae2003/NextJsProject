@@ -1,25 +1,27 @@
 "use server";
 
+import { actionClient } from "@/lib/safe-action";
+
+import { postCreateSchema } from "../schema";
 import { prisma } from "@/db/client";
-import { POSTS } from "@/path";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-
-export const createPost = async(formData : FormData) => {
-    const data = {
-        name : formData.get("name"),
-        content : formData.get("content")
-    };
+import { POSTS } from "@/path";
 
 
+export const createPost = actionClient.inputSchema(postCreateSchema).action(async({parsedInput : {name,content}})=>{
 
-    await prisma.info.create({
-        data : {
-            name : data.name as string,
-            content : data.content as string
-        }
-    });
+    try {
+        await prisma.info.create({
+            data : {
+                name ,
+                content,
+            }
+        });
+        revalidatePath(POSTS);
+        return {message : "post created!"};
+        
+    } catch (error) {
+        throw new Error("Create Post Error")
+    }
 
-    revalidatePath(POSTS);
-    redirect(POSTS);
-}
+})

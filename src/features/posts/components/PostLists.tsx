@@ -1,9 +1,10 @@
 "use server"
+import { info } from "../../../../generated/prisma/client";
 import { getPosts } from "../queries/get-posts"
 import PostItems from "./PostItems"
 
 const PostLists = async () => {
-  const data = await getPosts();
+  const data = await getPosts() as info[];
   return (
     <>
      {data &&

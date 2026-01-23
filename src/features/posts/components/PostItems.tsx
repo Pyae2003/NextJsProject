@@ -9,31 +9,40 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { SINGLE_POST } from "@/path";
+import { SINGLE_POST, UPDATE_POST } from "@/path";
 import { Post } from "@/types/post";
 import { MoveUpRight } from "lucide-react";
 
 import Link from "next/link";
 import { deletePosts } from "../actions/deletePosts";
+import { info } from "../../../../generated/prisma/client";
+import { Badge } from "@/components/ui/badge";
+import DeleteButton from "./DeleteButton";
 
-interface Props extends Post{
+interface Props extends info{
     isCard : boolean;
 }
 
-const PostItems = ({ id, name, content , isCard = true }: Props) => {
+const PostItems = ({ id, name, content , isCard = true , status }: Props) => {
 
   return (
-    <Card>
+    <Card className="relative">
+      <Badge className="absolute top-4 right-4" variant={status === "DONE"? "default" : "outline"}>{status}</Badge>
       <CardHeader>
         <CardTitle> {name}</CardTitle>
         <CardDescription className={cn(isCard && "line-clamp-1")}> {content}</CardDescription>
       </CardHeader>
       {
         isCard && (
-            <CardContent>
-            <Button asChild>
+          <CardContent>
+            <Button className="mx-4" asChild>
               <Link href={SINGLE_POST(id)}>
-                <MoveUpRight /> View{" "}
+                <MoveUpRight /> View
+              </Link>
+            </Button>
+            <Button variant={"secondary"} asChild>
+              <Link href={UPDATE_POST(id)}>
+                <MoveUpRight /> Edit
               </Link>
             </Button>
           </CardContent>
@@ -42,11 +51,7 @@ const PostItems = ({ id, name, content , isCard = true }: Props) => {
 
       {
         !isCard && (
-          <CardFooter>
-              <form action={deletePosts.bind(null,id as string)}>
-                <Button variant={"destructive"}>Delete</Button>
-              </form>
-        </CardFooter>
+          <DeleteButton id={id}/>
         )
       }
       

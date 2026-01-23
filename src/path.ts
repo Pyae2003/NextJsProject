@@ -7,3 +7,4 @@ export const POSTS = "/posts";
 type props = number | string;
 
 export const SINGLE_POST = (id : props) => `${POSTS}/${id}`
+export const UPDATE_POST = ( id : props) => `${POSTS}/${id}/edit`
