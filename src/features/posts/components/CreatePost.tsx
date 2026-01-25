@@ -88,7 +88,7 @@ const CreatePost = () => {
           </FieldGroup> 
         </form>
         <Field orientation="horizontal" className="mt-3">
-          <Button type="button" variant="outline" onClick={() => form.reset()}>
+          <Button type="button" form="form-rhf-demo" variant="outline" onClick={() => form.reset()}>
             Reset
           </Button>
           <Button type="submit" form="form-rhf-demo" disabled={isPending}>
