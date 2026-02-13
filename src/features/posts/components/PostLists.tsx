@@ -4,7 +4,7 @@ import { getPostProps, getPosts } from "../queries/get-posts"
 import PostItems from "./PostItems"
 
 type options = {
-  userId : string | undefined;
+  userId? : string | undefined ;
 }
 
 const PostLists = async ({userId = undefined} : options) => {

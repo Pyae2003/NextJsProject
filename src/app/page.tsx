@@ -7,7 +7,7 @@ const Home = () => {
       <main>
         <Heading title="All Post" description="view all forum posts" />
         <Suspense fallback={<p className="text-white"> Fetching posts ...</p>}>
-          <PostLists   />
+          <PostLists />
         </Suspense>
       </main>
     </div>
