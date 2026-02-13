@@ -17,7 +17,7 @@ export const updatePost = actionClient
             data : {
                 name,
                 content,
-                status
+                status,
             }
         });
 

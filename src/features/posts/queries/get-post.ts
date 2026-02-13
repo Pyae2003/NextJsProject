@@ -1,8 +1,13 @@
 import { prisma } from "@/db/client"
-import { Post } from "@/types/post"
+import { getPostProps } from "./get-posts"
 
-export const getPost = async (id : string) : Promise<Post | null> => {
+export const getPost = async (id : string) : Promise<getPostProps | null> => {
+
     return await prisma.info.findUnique({
-        where : {id}
+        where : {id},
+
+        include : {
+            user :true
+        }
     })
 }

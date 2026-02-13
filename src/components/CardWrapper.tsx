@@ -12,10 +12,11 @@ import { Field } from "@/components/ui/field";
 type CardWrapperProps = {
     title : string,
     description : string,
-    children : React.ReactNode
+    children : React.ReactNode,
+    footer? : React.ReactNode
 }
 
-const CardWrapper = ({title , description , children} : CardWrapperProps) => {
+const CardWrapper = ({title , description , children , footer} : CardWrapperProps) => {
   return (
     <>
       <Card>
@@ -28,7 +29,9 @@ const CardWrapper = ({title , description , children} : CardWrapperProps) => {
         <CardContent>
             {children}
         </CardContent>
-  
+        <CardFooter>
+          { footer && footer}
+        </CardFooter>
       </Card>
     </>
   );

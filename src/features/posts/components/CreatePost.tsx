@@ -1,9 +1,9 @@
 "use client";
 import { useEffect } from "react";
-import { Input } from "@/components/ui/input";import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input"; import { Textarea } from "@/components/ui/textarea";
 import { createPost } from "../actions/createPost";
 import { useAction } from "next-safe-action/hooks";
-import CardWrapper from "./CardWrapper";
+import CardWrapper from "../../../components/CardWrapper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
@@ -19,7 +19,7 @@ import { LoaderCircle } from "lucide-react";
 import { toast } from "sonner";
 
 const CreatePost = () => {
-  const { execute, isPending ,hasSucceeded ,hasErrored  } = useAction(createPost);
+  const { execute, isPending, hasSucceeded, hasErrored } = useAction(createPost);
 
   const form = useForm<z.infer<typeof postCreateSchema>>({
     resolver: zodResolver(postCreateSchema),
@@ -30,17 +30,17 @@ const CreatePost = () => {
   });
 
   function onSubmit(data: z.infer<typeof postCreateSchema>) {
-    execute({name : data.name,content : data.content});
+    execute({ name: data.name, content: data.content });
   };
 
-  useEffect(()=>{
-    if(hasSucceeded){
+  useEffect(() => {
+    if (hasSucceeded) {
       form.reset();
       toast.success("Post has been created", { position: "bottom-center" });
-    }else if(hasErrored){
+    } else if (hasErrored) {
       toast.error("Post created Error!", { position: "bottom-center" })
     }
-  },[hasSucceeded,hasErrored]);
+  }, [hasSucceeded, hasErrored]);
 
   return (
     <>
@@ -85,14 +85,14 @@ const CreatePost = () => {
                 </Field>
               )}
             />
-          </FieldGroup> 
+          </FieldGroup>
         </form>
         <Field orientation="horizontal" className="mt-3">
           <Button type="button" form="form-rhf-demo" variant="outline" onClick={() => form.reset()}>
             Reset
           </Button>
           <Button type="submit" form="form-rhf-demo" disabled={isPending}>
-            {isPending?<LoaderCircle className="animate-spin h-4 w-4"/>: ""}Submit
+            {isPending ? <LoaderCircle className="animate-spin h-4 w-4" /> : ""}Submit
           </Button>
         </Field>
       </CardWrapper>

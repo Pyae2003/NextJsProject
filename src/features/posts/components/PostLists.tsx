@@ -1,10 +1,16 @@
 "use server"
-import { info } from "../../../../generated/prisma/client";
-import { getPosts } from "../queries/get-posts"
+
+import { getPostProps, getPosts } from "../queries/get-posts"
 import PostItems from "./PostItems"
 
-const PostLists = async () => {
-  const data = await getPosts() as info[];
+type options = {
+  userId : string | undefined;
+}
+
+const PostLists = async ({userId = undefined} : options) => {
+  
+  const data = await getPosts(userId) as getPostProps[];
+  
   return (
     <>
      {data &&

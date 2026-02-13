@@ -1,6 +1,6 @@
 "use client";
 
-import CardWrapper from "./CardWrapper";
+import CardWrapper from "../../../components/CardWrapper";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -34,7 +34,7 @@ const UpdatePost = ({ id, name, content, status }: info) => {
   const form = useForm<z.infer<typeof postUpdateSchema>>({
     resolver: zodResolver(postUpdateSchema),
     defaultValues: {
-      id : id,
+      id: id,
       name: name,
       content: content,
       status: status,
@@ -105,7 +105,7 @@ const UpdatePost = ({ id, name, content, status }: info) => {
                       <FieldError errors={[fieldState.error]} />
                     )}
                     <FieldLabel>
-                      Select Status : 
+                      Select Status :
                     </FieldLabel>
                   </FieldContent>
                   <Select
