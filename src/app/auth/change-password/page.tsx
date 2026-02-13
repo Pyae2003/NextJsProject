@@ -1,5 +1,5 @@
 import ChangePassword from '@/features/auth/components/ChangePassword'
-import React from 'react'
+export const dynamic = "force-dynamic";
 
 const page = () => {
   return (

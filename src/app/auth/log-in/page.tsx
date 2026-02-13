@@ -1,7 +1,7 @@
 import Login from '@/features/auth/components/Login'
 import React from 'react'
 
-const page = () => {
+const page = async () => {
   return (
     <div>
         <Login/>
