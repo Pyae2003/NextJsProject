@@ -33,55 +33,38 @@ export const getPosts = async (
     },
   };
 
-  console.log("User id ", userId);
-  //   return await prisma.info.findMany({
-  //     orderBy: {
-  //       createdAt: searchParams.sort?.toString() === "desc" ? "desc" : "asc",
-  //     },
-  //     include: {
-  //       user: true,
-  //     },
-  //     where: {
-  //       userId: userId,
-  //       name: {
-  //         contains: searchParams.search,
-  //         mode: "insensitive",
-  //       },
-  //     },
-  //   });
+  const [ totalCounts , posts ] = await prisma.$transaction([
+    prisma.info.count({
+      where: whereCondition
+    }),
+    prisma.info.findMany({
+      orderBy: {
+        createdAt: searchParams.sort?.toString() === "desc" ? "desc" : "asc",
+      },
+      where: whereCondition,
+      include: {
+        user: true,
+      },
+      skip : skipPage,
+      take : POST_PER_PAGE
+    })
+  ]);
 
-  // const [ totalCounts , posts ] = await prisma.$transaction([
-  //   prisma.info.count({
-  //     where: whereCondition
-  //   }),
-  //   prisma.info.findMany({
-  //     orderBy: {
-  //       createdAt: searchParams.sort?.toString() === "desc" ? "desc" : "asc",
-  //     },
-  //     include: {
-  //       user: true,
-  //     },
-  //     where: whereCondition,
-  //     skip : skipPage,
-  //     take : POST_PER_PAGE
-  //   })
-  // ]);
-
-  const totalCounts = await prisma.info.count({
-    where: whereCondition,
-  });
+  // const totalCounts = await prisma.info.count({
+  //   where: whereCondition,
+  // });
   
-  const posts = await prisma.info.findMany({
-    orderBy: {
-      createdAt: searchParams.sort?.toString() === "desc" ? "desc" : "asc",
-    },
-    include: {
-      user: true,
-    },
-    where: whereCondition,
-    skip: skipPage,
-    take: POST_PER_PAGE,
-  });
+  // const posts = await prisma.info.findMany({
+  //   orderBy: {
+  //     createdAt: searchParams.sort?.toString() === "desc" ? "desc" : "asc",
+  //   },
+  //   include: {
+  //     user: true,
+  //   },
+  //   where: whereCondition,
+  //   skip: skipPage,
+  //   take: POST_PER_PAGE,
+  // });
 
   const totalPages = Math.ceil(totalCounts / POST_PER_PAGE);
 
